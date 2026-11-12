@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoLux Motors | Jahon Avtomobil Brendlari Markazi</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Plus Jakarta Sans & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        auto: {
+                            bg: '#090b10',
+                            card: '#111520',
+                            border: '#1f2636',
+                            crimson: '#e11d48',
+                            cyan: '#0ea5e9',
+                            silver: '#cbd5e1'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #090b10;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        /* Showroom Ambient Grid */
+        .showroom-grid {
+            background-size: 48px 48px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(17, 21, 32, 0.78);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+        /* Crimson & Silver Glows */
+        .glow-crimson {
+            box-shadow: 0 0 28px rgba(225, 29, 72, 0.25);
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(225, 29, 72, 0.55);
+            box-shadow: 0 12px 32px -8px rgba(225, 29, 72, 0.2);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090b10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2636;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e11d48;
+        }
+        @keyframes pulse-headlight {
+            0%, 100% { opacity: 0.75; filter: drop-shadow(0 0 8px #38bdf8); }
+            50% { opacity: 1; filter: drop-shadow(0 0 18px #38bdf8); }
+        }
+        .headlight-glow {
+            animation: pulse-headlight 2.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-rose-600/30 selection:text-rose-200">
+
+    <!-- Toast Bildirishnomalar Konteyneri -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
+
+    <!-- 1. Navigatsiya Paneli -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Brend Logotipi -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-rose-600 via-rose-500 to-slate-800 p-[1px] glow-crimson">
+                        <div class="w-full h-full bg-[#090b10] rounded-xl flex items-center justify-center group-hover:bg-transparent transition-colors">
+                            <i class="fa-solid fa-gauge-high text-rose-500 group-hover:text-white text-xl transition-colors"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-xl tracking-tight text-white uppercase">Auto<span class="text-rose-500">Lux</span></span>
+                        <span class="block text-[10px] font-mono text-slate-400 tracking-[0.22em] uppercase">MOTORS SHOWROOM</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menyu -->
+                <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300">
+                    <a href="#asosiy" class="hover:text-rose-400 transition-colors">Asosiy</a>
+                    <a href="#katalog" class="hover:text-rose-400 transition-colors">Brendlar Katalogi</a>
+                    <a href="#konfigurator" class="hover:text-rose-400 transition-colors">Konfigurator</a>
+                    <a href="#solishtirish" class="hover:text-rose-400 transition-colors">Solishtirish</a>
+                    <a href="#kalkulyator" class="hover:text-rose-400 transition-colors">Kredit va Test-drayv</a>
+                </nav>
+
+                <!-- Harakat Tugmalari -->
+                <div class="flex items-center gap-3">
+                    <a href="#test-drayv" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-sm font-semibold transition-all shadow-lg shadow-rose-600/25">
+                        <i class="fa-solid fa-steering-wheel"></i>
+                        <span>Test-drayvga yozilish</span>
+                    </a>
+                    <button id="mobile-menu-btn" aria-label="Menyuni ochish" class="lg:hidden p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-rose-400">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobil Menyu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-[#111520] border-b border-slate-800 px-4 pt-2 pb-5 space-y-2">
+            <a href="#asosiy" class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-rose-400">Asosiy</a>
+            <a href="#katalog" class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-rose-400">Brendlar Katalogi</a>
+            <a href="#konfigurator" class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-rose-400">Konfigurator</a>
+            <a href="#solishtirish" class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-rose-400">Solishtirish</a>
+            <a href="#kalkulyator" class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-rose-400">Kredit va Test-drayv</a>
+            <a href="#test-drayv" class="block text-center mt-3 px-4 py-3 rounded-xl bg-rose-600 text-white font-semibold">Test-drayvga yozilish</a>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section (Flagman Avtomobil Taqdimoti) -->
+    <section id="asosiy" class="relative showroom-grid pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden border-b border-slate-800/70">
+        <!-- Ambient Spotlight Glows -->
+        <div class="absolute top-0 left-1/4 w-[520px] h-[520px] bg-rose-600/10 rounded-full blur-[130px] pointer-events-none"></div>
+        <div class="absolute bottom-0 right-1/4 w-[450px] h-[450px] bg-sky-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                <!-- Chap ustun: Matn va Texnik Ko'rsatkichlar -->
+                <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono tracking-wider uppercase">
+                        <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                        <span>2026 YILGI RASMIY AVTOSALON KOLLEKSIYASI</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.12] tracking-tight">
+                        Tezlik, Hashamat va <br class="hidden sm:block">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-amber-400 to-sky-400">
+                            Mukammal Muhandislik
+                        </span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                        Dunyo yetakchi avtomobil brendlari — BMW, Mercedes-Benz, Porsche, Tesla, Audi va BYD flagman modellari bir makonda. O'z orzuingizdagi avtomobilni sozlang va sinovdan o'tkazing.
+                    </p>
+
+                    <!-- CTA Tugmalar -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#katalog" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-gradient-to-r from-rose-600 to-rose-500 text-white font-bold text-sm sm:text-base hover:opacity-95 transition-all shadow-lg shadow-rose-600/25 flex items-center justify-center gap-2.5">
+                            <i class="fa-solid fa-car-side"></i>
+                            <span>Modellar katalogi</span>
+                        </a>
+                        <a href="#konfigurator" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#111520] border border-slate-700 text-white font-semibold text-sm sm:text-base hover:border-sky-400/60 hover:text-sky-300 transition-all flex items-center justify-center gap-2.5">
+                            <i class="fa-solid fa-sliders text-sky-400"></i>
+                            <span>3D Konfigurator</span>
+                        </a>
+                    </div>
+
+                    <!-- Tezkor Dinamika Ko'rsatkichlari -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80 max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-white font-mono">2.6 <span class="text-xs text-rose-400 font-sans">son</span></div>
+                            <div class="text-xs text-slate-400 mt-0.5">0–100 km/soat tezlanish</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-sky-400 font-mono">330 <span class="text-xs text-slate-400 font-sans">km/h</span></div>
+                            <div class="text-xs text-slate-400 mt-0.5">Maksimal tezlik</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-amber-400 font-mono">1020 <span class="text-xs text-slate-400 font-sans">o.k.</span></div>
+                            <div class="text-xs text-slate-400 mt-0.5">Maksimal quvvat</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- O'ng ustun: Yuqori aniqlikdagi Vektor Sportkar Illyustratsiyasi -->
+                <div class="lg:col-span-6">
+                    <div class="relative rounded-3xl bg-gradient-to-b from-[#131826] to-[#0a0d14] border border-slate-800/90 p-6 sm:p-8 shadow-2xl overflow-hidden">
+                        <!-- Top Showroom Header -->
+                        <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-4">
+                            <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> SHOWROOM EDITION • GT-RS</span>
+                            <span class="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-rose-400">AWD / TWIN-TURBO</span>
+                        </div>
+
+                        <!-- Procedural Luxury Sports Coupe SVG -->
+                        <div class="relative py-4">
+                            <svg viewBox="0 0 800 320" class="w-full h-auto drop-shadow-2xl" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="heroBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#f43f5e"/>
+                                        <stop offset="45%" stop-color="#be123c"/>
+                                        <stop offset="100%" stop-color="#4c0519"/>
+                                    </linearGradient>
+                                    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#0f172a"/>
+                                        <stop offset="50%" stop-color="#1e293b"/>
+                                        <stop offset="100%" stop-color="#020617"/>
+                                    </linearGradient>
+                                    <radialGradient id="floorGlow" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="#e11d48" stop-opacity="0.35"/>
+                                        <stop offset="100%" stop-color="#090b10" stop-opacity="0"/>
+                                    </radialGradient>
+                                    <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#f8fafc"/>
+                                        <stop offset="50%" stop-color="#94a3b8"/>
+                                        <stop offset="100%" stop-color="#334155"/>
+                                    </linearGradient>
+                                </defs>
+
+                                <!-- Showroom Podium Shadow & Glow -->
+                                <ellipse cx="400" cy="268" rx="340" ry="26" fill="url(#floorGlow)"/>
+                                <ellipse cx="400" cy="265" rx="310" ry="12" fill="#020408" opacity="0.9"/>
+
+                                <!-- Rear Spoiler Wing -->
+                                <path d="M 92 145 L 135 145 L 145 162 L 105 162 Z" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+                                <path d="M 80 140 L 142 142 L 138 148 L 82 147 Z" fill="#e11d48"/>
+
+                                <!-- Main Aerodynamic Car Body -->
+                                <path d="M 85 210 
+                                         C 82 185, 95 168, 125 160 
+                                         L 220 148 
+                                         C 275 106, 360 94, 465 98 
+                                         C 535 102, 595 132, 645 154 
+                                         C 695 162, 735 176, 745 198 
+                                         C 750 212, 744 228, 725 232 
+                                         L 655 234 
+                                         C 652 192, 572 192, 568 234 
+                                         L 252 234 
+                                         C 248 192, 168 192, 164 234 
+                                         L 98 232 
+                                         C 86 228, 84 220, 85 210 Z" 
+                                      fill="url(#heroBodyGrad)" stroke="#fb7185" stroke-width="1.5"/>
+
+                                <!-- Cabin & Tinted Windows -->
+                                <path d="M 245 147 
+                                         C 290 112, 365 104, 455 107 
+                                         C 515 110, 565 130, 605 151 
+                                         L 440 153 L 245 147 Z" 
+                                      fill="url(#glassGrad)" stroke="#38bdf8" stroke-width="1"/>
+                                <!-- Window Pillar -->
+                                <line x1="425" y1="106" x2="415" y2="152" stroke="#090b10" stroke-width="6"/>
+
+                                <!-- Side Aerodynamic Vent & Accent Line -->
+                                <path d="M 265 188 L 410 176 L 540 185" fill="none" stroke="#fda4af" stroke-width="1.5" opacity="0.6"/>
+                                <path d="M 268 175 L 330 168 L 315 204 L 265 202 Z" fill="#0f172a" opacity="0.85"/>
+
+                                <!-- Carbon Fiber Side Skirt -->
+                                <path d="M 255 227 L 565 227 L 560 236 L 260 236 Z" fill="#0f172a"/>
+
+                                <!-- Glowing Cyber LED Headlight -->
+                                <path d="M 665 174 L 732 184 L 718 193 L 660 183 Z" fill="#e0f2fe" class="headlight-glow"/>
+                                <path d="M 732 184 L 795 196 L 795 218 L 718 193 Z" fill="#38bdf8" opacity="0.16"/>
+
+                                <!-- Rear LED Taillight Strip -->
+                                <path d="M 88 174 L 136 170 L 132 178 L 86 182 Z" fill="#ff1e56" filter="drop-shadow(0 0 8px #ff1e56)"/>
+
+                                <!-- Rear Wheel -->
+                                <g transform="translate(208, 232)">
+                                    <circle cx="0" cy="0" r="44" fill="#090b10" stroke="#1e293b" stroke-width="4"/>
+                                    <circle cx="0" cy="0" r="31" fill="#111827" stroke="url(#rimGrad)" stroke-width="3"/>
+                                    <!-- Brake Caliper -->
+                                    <path d="M -18 -14 A 22 22 0 0 1 -6 -22 L -3 -12 A 12 12 0 0 0 -10 -7 Z" fill="#e11d48"/>
+                                    <!-- Multi-spoke Alloy Rim -->
+                                    <g stroke="url(#rimGrad)" stroke-width="3" stroke-linecap="round">
+                                        <line x1="0" y1="-29" x2="0" y2="29"/>
+                                        <line x1="-29" y1="0" x2="29" y2="0"/>
+                                        <line x1="-20" y1="-20" x2="20" y2="20"/>
+                                        <line x1="-20" y1="20" x2="20" y2="-20"/>
+                                    </g>
+                                    <circle cx="0" cy="0" r="8" fill="#0f172a" stroke="#e11d48" stroke-width="2"/>
+                                </g>
+
+                                <!-- Front Wheel -->
+                                <g transform="translate(612, 232)">
+                                    <circle cx="0" cy="0" r="44" fill="#090b10" stroke="#1e293b" stroke-width="4"/>
+                                    <circle cx="0" cy="0" r="31" fill="#111827" stroke="url(#rimGrad)" stroke-width="3"/>
+                                    <!-- Brake Caliper -->
+                                    <path d="M -18 -14 A 22 22 0 0 1 -6 -22 L -3 -12 A 12 12 0 0 0 -10 -7 Z" fill="#e11d48"/>
+                                    <!-- Multi-spoke Alloy Rim -->
+                                    <g stroke="url(#rimGrad)" stroke-width="3" stroke-linecap="round">
+                                        <line x1="0" y1="-29" x2="0" y2="29"/>
+                                        <line x1="-29" y1="0" x2="29" y2="0"/>
+                                        <line x1="-20" y1="-20" x2="20" y2="20"/>
+                                        <line x1="-20" y1="20" x2="20" y2="-20"/>
+                                    </g>
+                                    <circle cx="0" cy="0" r="8" fill="#0f172a" stroke="#e11d48" stroke-width="2"/>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- Bottom Quick Highlight Bar -->
+                        <div class="mt-2 pt-4 border-t border-slate-800/90 flex flex-wrap items-center justify-between gap-3 text-xs">
+                            <div class="flex items-center gap-2 text-slate-300">
+                                <i class="fa-solid fa-shield-halved text-sky-400"></i>
+                                <span>5 yil yoki 150,000 km rasmiy kafolat</span>
+                            </div>
+                            <span class="font-mono font-bold text-rose-400">Boshlang'ich narx: $42,500 dan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Brendlar Katalogi va Interaktiv Filtr -->
+    <section id="katalog" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <div>
+                <span class="text-xs font-mono uppercase tracking-widest text-rose-500">Rasmiy Avtopark</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Jahon Brendlari Katalogi</h2>
+            </div>
+            <p class="text-sm text-slate-400 max-w-md">
+                Brend, kuzov turi yoki model nomi bo'yicha qidiring. Har bir avtomobilni konfiguratsiya qilishingiz yoki o'zaro taqqoslashingiz mumkin.
+            </p>
+        </div>
+
+        <!-- Filtrlar va Qidiruv Paneli -->
+        <div class="rounded-2xl bg-[#111520] border border-slate-800 p-5 mb-8 space-y-5">
+            <!-- Brendlar Tugmalari -->
+            <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs font-mono text-slate-400 uppercase mr-2">Brend:</span>
+                <button onclick="setBrandFilter('ALL')" data-brand="ALL" class="brand-btn active px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all">Barchasi</button>
+                <button onclick="setBrandFilter('BMW')" data-brand="BMW" class="brand-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-rose-500/50 transition-all">BMW</button>
+                <button onclick="setBrandFilter('Mercedes-Benz')" data-brand="Mercedes-Benz" class="brand-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-rose-500/50 transition-all">Mercedes-Benz</button>
+                <button onclick="setBrandFilter('Porsche')" data-brand="Porsche" class="brand-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-rose-500/50 transition-all">Porsche</button>
+                <button onclick="setBrandFilter('Tesla')" data-brand="Tesla" class="brand-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-rose-500/50 transition-all">Tesla</button>
+                <button onclick="setBrandFilter('Audi')" data-brand="Audi" class="brand-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-rose-500/50 transition-all">Audi</button>
+                <button onclick="setBrandFilter('BYD')" data-brand="BYD" class="brand-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-rose-500/50 transition-all">BYD</button>
+            </div>
+
+            <!-- Kuzov turi va Qidiruv -->
+            <div class="grid sm:grid-cols-12 gap-4 pt-3 border-t border-slate-800/80 items-center">
+                <div class="sm:col-span-7 flex flex-wrap items-center gap-2">
+                    <span class="text-xs font-mono text-slate-400 uppercase mr-1">Kuzov:</span>
+                    <button onclick="setTypeFilter('ALL')" data-type="ALL" class="type-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-sky-500/20 text-sky-300 border border-sky-500/40">Barcha turlar</button>
+                    <button onclick="setTypeFilter('Sportkar')" data-type="Sportkar" class="type-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-900 text-slate-400 border border-slate-800 hover:text-white">Sportkar</button>
+                    <button onclick="setTypeFilter('Sedan')" data-type="Sedan" class="type-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-900 text-slate-400 border border-slate-800 hover:text-white">Sedan</button>
+                    <button onclick="setTypeFilter('Krossover')" data-type="Krossover" class="type-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-900 text-slate-400 border border-slate-800 hover:text-white">Krossover / SUV</button>
+                    <button onclick="setTypeFilter('Elektromobil')" data-type="Elektromobil" class="type-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-900 text-slate-400 border border-slate-800 hover:text-white">Elektromobil</button>
+                </div>
+
+                <!-- Qidiruv maydoni -->
+                <div class="sm:col-span-5 relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                    <input type="text" id="search-input" oninput="renderCatalog()" placeholder="Model nomini yozing (masalan: M5, Taycan, Han)..." 
+                        class="w-full bg-slate-950 border border-slate-800 focus:border-rose-500 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white outline-none transition-all">
+                </div>
+            </div>
+        </div>
+
+        <!-- Avtomobillar Grid Konteyneri -->
+        <div id="catalog-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+
+    <!-- 4. Interaktiv Avtomobil Konfiguratori (3D Vektor Rang va Disk Tanlash) -->
+    <section id="konfigurator" class="py-20 bg-[#06080d] border-y border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-mono uppercase tracking-widest text-sky-400">Shaxsiy Komplektatsiya</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Interaktiv Avtomobil Konfiguratori</h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">
+                    Modelni tanlang, kuzov rangini o'zgartiring, sport disklar va salon paketini belgilang — yakuniy narx avtomatik hisoblanadi.
+                </p>
+            </div>
+
+            <div class="rounded-3xl bg-[#111520] border border-slate-800 p-6 sm:p-8 shadow-2xl">
+                <div class="grid lg:grid-cols-12 gap-8 items-center">
+                    <!-- Chap tomon: Jonli Avtomobil Vizualizatsiyasi -->
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="relative rounded-2xl bg-gradient-to-b from-[#171d2e] to-[#0a0d14] border border-slate-800 p-6 overflow-hidden">
+                            <div class="flex justify-between items-center text-xs font-mono text-slate-400 mb-2">
+                                <span id="cfg-badge-brand" class="text-sky-400 font-bold uppercase">PORSCHE 911 TURBO S</span>
+                                <span id="cfg-badge-color">Rang: Poyga Qizili</span>
+                            </div>
+
+                            <!-- Live Color Changing SVG Car -->
+                            <svg id="configurator-svg" viewBox="0 0 800 310" class="w-full h-auto my-2" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <radialGradient id="cfgFloorGlow" cx="50%" cy="50%" r="50%">
+                                        <stop id="cfg-glow-stop" offset="0%" stop-color="#e11d48" stop-opacity="0.35"/>
+                                        <stop offset="100%" stop-color="#0a0d14" stop-opacity="0"/>
+                                    </radialGradient>
+                                    <linearGradient id="cfgGlass" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#0f172a"/>
+                                        <stop offset="55%" stop-color="#1e293b"/>
+                                        <stop offset="100%" stop-color="#020617"/>
+                                    </linearGradient>
+                                </defs>
+
+                                <!-- Floor Glow -->
+                                <ellipse cx="400" cy="262" rx="340" ry="24" fill="url(#cfgFloorGlow)"/>
+                                <ellipse cx="400" cy="258" rx="305" ry="11" fill="#020408" opacity="0.9"/>
+
+                                <!-- Dynamic Body Silhouette (Changes shape slightly for SUV vs Sedan/Coupe) -->
+                                <path id="cfg-car-body" d="M 85 205 C 82 180, 98 162, 130 155 L 222 144 C 275 102, 360 92, 465 96 C 535 100, 595 130, 645 150 C 695 158, 735 172, 745 195 C 750 210, 742 225, 722 228 L 652 230 C 648 188, 568 188, 564 230 L 252 230 C 248 188, 168 188, 164 230 L 98 228 C 86 224, 84 215, 85 205 Z" 
+                                      fill="#e11d48" stroke="#ffffff" stroke-opacity="0.25" stroke-width="1.5"/>
+
+                                <!-- Roof / Windows -->
+                                <path id="cfg-car-glass" d="M 245 143 C 290 108, 365 101, 455 104 C 515 107, 565 127, 605 147 L 440 149 L 245 143 Z" 
+                                      fill="url(#cfgGlass)" stroke="#38bdf8" stroke-width="1"/>
+                                <line x1="422" y1="103" x2="412" y2="148" stroke="#090b10" stroke-width="6"/>
+
+                                <!-- Interior Accent Seat Preview -->
+                                <path id="cfg-interior-seat" d="M 355 122 L 385 122 L 395 146 L 350 146 Z" fill="#1e293b"/>
+
+                                <!-- LED Headlight & Taillight -->
+                                <path d="M 665 170 L 732 180 L 718 189 L 660 179 Z" fill="#e0f2fe" class="headlight-glow"/>
+                                <path d="M 88 170 L 136 166 L 132 174 L 86 178 Z" fill="#ff1e56"/>
+
+                                <!-- Side Skirt & Door Line -->
+                                <path d="M 265 182 L 535 180" fill="none" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.5"/>
+                                <path d="M 255 223 L 562 223 L 558 232 L 260 232 Z" fill="#0f172a"/>
+
+                                <!-- Rear Wheel -->
+                                <g transform="translate(208, 228)">
+                                    <circle cx="0" cy="0" r="44" fill="#090b10" stroke="#1e293b" stroke-width="4"/>
+                                    <circle id="cfg-rim-rear" cx="0" cy="0" r="30" fill="#111827" stroke="#cbd5e1" stroke-width="3.5"/>
+                                    <g id="cfg-spokes-rear" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round">
+                                        <line x1="0" y1="-28" x2="0" y2="28"/>
+                                        <line x1="-28" y1="0" x2="28" y2="0"/>
+                                        <line x1="-20" y1="-20" x2="20" y2="20"/>
+                                        <line x1="-20" y1="20" x2="20" y2="-20"/>
+                                    </g>
+                                    <circle cx="0" cy="0" r="7" fill="#e11d48"/>
+                                </g>
+
+                                <!-- Front Wheel -->
+                                <g transform="translate(608, 228)">
+                                    <circle cx="0" cy="0" r="44" fill="#090b10" stroke="#1e293b" stroke-width="4"/>
+                                    <circle id="cfg-rim-front" cx="0" cy="0" r="30" fill="#111827" stroke="#cbd5e1" stroke-width="3.5"/>
+                                    <g id="cfg-spokes-front" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round">
+                                        <line x1="0" y1="-28" x2="0" y2="28"/>
+                                        <line x1="-28" y1="0" x2="28" y2="0"/>
+                                        <line x1="-20" y1="-20" x2="20" y2="20"/>
+                                        <line x1="-20" y1="20" x2="20" y2="-20"/>
+                                    </g>
+                                    <circle cx="0" cy="0" r="7" fill="#e11d48"/>
+                                </g>
+                            </svg>
+
+                            <!-- Quick Specs Bar inside Configurator -->
+                            <div class="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800/80 text-center">
+                                <div class="bg-slate-950/70 rounded-xl p-2.5">
+                                    <div class="text-[11px] text-slate-400">Quvvat</div>
+                                    <div id="cfg-spec-hp" class="text-sm font-bold font-mono text-white">650 o.k.</div>
+                                </div>
+                                <div class="bg-slate-950/70 rounded-xl p-2.5">
+                                    <div class="text-[11px] text-slate-400">0–100 km/soat</div>
+                                    <div id="cfg-spec-acc" class="text-sm font-bold font-mono text-sky-400">2.7 son</div>
+                                </div>
+                                <div class="bg-slate-950/70 rounded-xl p-2.5">
+                                    <div class="text-[11px] text-slate-400">Uzatma</div>
+                                    <div id="cfg-spec-drive" class="text-sm font-bold font-mono text-emerald-400">AWD (4x4)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- O'ng tomon: Boshqaruv Elementlari -->
+                    <div class="lg:col-span-5 space-y-5">
+                        <!-- 1. Bazaviy Model -->
+                        <div>
+                            <label class="block text-xs font-mono text-slate-400 uppercase mb-2">1. Bazaviy modelni tanlang:</label>
+                            <select id="cfg-model-select" onchange="updateConfigurator()" class="w-full bg-slate-950 border border-slate-700 focus:border-rose-500 rounded-xl px-4 py-3 text-sm text-white font-semibold outline-none"></select>
+                        </div>
+
+                        <!-- 2. Kuzov Rangi -->
+                        <div>
+                            <label class="block text-xs font-mono text-slate-400 uppercase mb-2">2. Kuzov rangi:</label>
+                            <div class="flex flex-wrap gap-3" id="cfg-color-swatches">
+                                <button type="button" onclick="selectConfigColor('#e11d48', 'Poyga Qizili (Crimson)', 0, this)" class="color-swatch active w-10 h-10 rounded-full bg-[#e11d48] ring-2 ring-offset-2 ring-offset-[#111520] ring-white transition-all" title="Poyga Qizili"></button>
+                                <button type="button" onclick="selectConfigColor('#0ea5e9', 'Elektr Moviy (Cyan Metallic)', 1200, this)" class="color-swatch w-10 h-10 rounded-full bg-[#0ea5e9] transition-all" title="Elektr Moviy (+$1,200)"></button>
+                                <button type="button" onclick="selectConfigColor('#f8fafc', 'Marvarid Oq (Pearl White)', 900, this)" class="color-swatch w-10 h-10 rounded-full bg-[#f8fafc] transition-all" title="Marvarid Oq (+$900)"></button>
+                                <button type="button" onclick="selectConfigColor('#1e293b', 'Obsidian Qora (Carbon Black)', 800, this)" class="color-swatch w-10 h-10 rounded-full bg-[#1e293b] border border-slate-600 transition-all" title="Obsidian Qora (+$800)"></button>
+                                <button type="button" onclick="selectConfigColor('#10b981', 'Zumrad Yashil (British Racing)', 1500, this)" class="color-swatch w-10 h-10 rounded-full bg-[#10b981] transition-all" title="Zumrad Yashil (+$1,500)"></button>
+                                <button type="button" onclick="selectConfigColor('#f59e0b', 'Quyosh Oltin (Solar Gold)', 1800, this)" class="color-swatch w-10 h-10 rounded-full bg-[#f59e0b] transition-all" title="Quyosh Oltin (+$1,800)"></button>
+                            </div>
+                        </div>
+
+                        <!-- 3. G'ildirak Disklari -->
+                        <div>
+                            <label class="block text-xs font-mono text-slate-400 uppercase mb-2">3. G'ildirak disklari:</label>
+                            <div class="grid grid-cols-3 gap-2.5">
+                                <button type="button" onclick="selectConfigRim('silver', '#cbd5e1', 0, this)" class="rim-btn active p-2.5 rounded-xl bg-slate-950 border border-rose-500 text-xs font-semibold text-white text-center">
+                                    19" Kumush<span class="block text-[10px] text-slate-400">Standart</span>
+                                </button>
+                                <button type="button" onclick="selectConfigRim('black', '#475569', 1600, this)" class="rim-btn p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-slate-300 text-center">
+                                    20" Qora Mat<span class="block text-[10px] text-sky-400">+$1,600</span>
+                                </button>
+                                <button type="button" onclick="selectConfigRim('gold', '#fbbf24', 2400, this)" class="rim-btn p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-slate-300 text-center">
+                                    21" Forged Gold<span class="block text-[10px] text-sky-400">+$2,400</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 4. Salon Paketi -->
+                        <div>
+                            <label class="block text-xs font-mono text-slate-400 uppercase mb-2">4. Salon va Interyer paketi:</label>
+                            <select id="cfg-interior-select" onchange="updateConfigurator()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white outline-none">
+                                <option value="0" data-color="#1e293b">Qora Nappa Charm (Standart — $0)</option>
+                                <option value="2200" data-color="#9f1239">Qizil-Qora Sport Alcantara (+$2,200)</option>
+                                <option value="3100" data-color="#d97706">Konyak Rangi Premium Luxury (+$3,100)</option>
+                            </select>
+                        </div>
+
+                        <!-- Yakuniy Narx va Buyurtma -->
+                        <div class="pt-4 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                                <div class="text-xs text-slate-400">Yakuniy konfiguratsiya narxi:</div>
+                                <div id="cfg-total-price" class="text-3xl font-extrabold font-mono text-white">$185,000</div>
+                            </div>
+                            <button onclick="bookConfiguredCar()" class="px-6 py-3.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm transition-all shadow-lg shadow-rose-600/25 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-check-circle"></i>
+                                <span>Band Qilish</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Modellarni Yonma-yon Solishtirish (Comparison Tool) -->
+    <section id="solishtirish" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-xs font-mono uppercase tracking-widest text-rose-500">Texnik Tahlil</span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Avtomobillarni Yonma-yon Solishtirish</h2>
+            <p class="text-slate-400 mt-3 text-sm sm:text-base">
+                Ikki xil modelni tanlang va ularning dvigatel quvvati, tezlanishi hamda narx ko'rsatkichlarini vizual tarzda taqqoslang.
+            </p>
+        </div>
+
+        <div class="rounded-3xl bg-[#111520] border border-slate-800 p-6 sm:p-8">
+            <!-- Model Selectors -->
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="space-y-2">
+                    <label class="text-xs font-mono text-rose-400 uppercase">1-Avtomobil:</label>
+                    <select id="cmp-select-1" onchange="renderComparison()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white font-semibold outline-none"></select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-mono text-sky-400 uppercase">2-Avtomobil:</label>
+                    <select id="cmp-select-2" onchange="renderComparison()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white font-semibold outline-none"></select>
+                </div>
+            </div>
+
+            <!-- Dynamic Comparison Metrics -->
+            <div id="comparison-results" class="space-y-6"></div>
+        </div>
+    </section>
+
+    <!-- 6. Avtokredit / Lizing Kalkulyatori va Test-Drayvga Yozilish -->
+    <section id="kalkulyator" class="py-20 bg-[#06080d] border-t border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-10">
+                
+                <!-- Chap ustun: Avtokredit va Lizing Kalkulyatori -->
+                <div class="lg:col-span-6 rounded-3xl bg-[#111520] border border-slate-800 p-6 sm:p-8 space-y-6">
+                    <div>
+                        <span class="text-xs font-mono text-sky-400 uppercase">Moliyaviy Yechimlar</span>
+                        <h3 class="text-2xl font-bold text-white mt-1">Avtokredit / Lizing Kalkulyatori</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Oylik to'lov miqdorini dastlabki to'lov va muddatga qarab hisoblang.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Avtomobil narxi -->
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-1.5">
+                                <span class="text-slate-300">Avtomobil narxi ($):</span>
+                                <span id="loan-price-val" class="text-white font-bold">$65,000</span>
+                            </div>
+                            <input type="range" id="loan-price" min="25000" max="250000" step="1000" value="65000" oninput="calculateLoan()" class="w-full accent-rose-500 cursor-pointer">
+                        </div>
+
+                        <!-- Boshlang'ich to'lov % -->
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-1.5">
+                                <span class="text-slate-300">Boshlang'ich to'lov:</span>
+                                <span id="loan-down-val" class="text-sky-400 font-bold">30% ($19,500)</span>
+                            </div>
+                            <input type="range" id="loan-down" min="15" max="70" step="5" value="30" oninput="calculateLoan()" class="w-full accent-sky-400 cursor-pointer">
+                        </div>
+
+                        <!-- Muddat (oylar) -->
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-1.5">
+                                <span class="text-slate-300">Kredit / Lizing muddati:</span>
+                                <span id="loan-months-val" class="text-emerald-400 font-bold">36 oy (3 yil)</span>
+                            </div>
+                            <input type="range" id="loan-months" min="12" max="60" step="6" value="36" oninput="calculateLoan()" class="w-full accent-emerald-400 cursor-pointer">
+                        </div>
+
+                        <!-- Yillik foiz stavkasi -->
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-1.5">
+                                <span class="text-slate-300">Yillik foiz stavkasi:</span>
+                                <span id="loan-rate-val" class="text-amber-400 font-bold">14%</span>
+                            </div>
+                            <input type="range" id="loan-rate" min="6" max="24" step="1" value="14" oninput="calculateLoan()" class="w-full accent-amber-400 cursor-pointer">
+                        </div>
+                    </div>
+
+                    <!-- Natija Qutisi -->
+                    <div class="rounded-2xl bg-slate-950 border border-slate-800 p-5 grid grid-cols-2 gap-4">
+                        <div>
+                            <div class="text-xs text-slate-400">Oylik to'lov:</div>
+                            <div id="loan-monthly" class="text-2xl sm:text-3xl font-extrabold font-mono text-rose-500 mt-1">$1,555</div>
+                        </div>
+                        <div class="border-l border-slate-800 pl-4">
+                            <div class="text-xs text-slate-400">Kredit summasi:</div>
+                            <div id="loan-principal" class="text-lg sm:text-xl font-bold font-mono text-white mt-1">$45,500</div>
+                            <div class="text-[11px] text-slate-500 mt-0.5">Rasmiylashtirish 1 ish kunida</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- O'ng ustun: Test-Drayvga Yozilish Formasi -->
+                <div id="test-drayv" class="lg:col-span-6 rounded-3xl bg-[#111520] border border-slate-800 p-6 sm:p-8 space-y-6">
+                    <div>
+                        <span class="text-xs font-mono text-rose-500 uppercase">Shaxsiy Sinov</span>
+                        <h3 class="text-2xl font-bold text-white mt-1">Test-Drayvga Yozilish</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">O'zingizga qulay shahar va sanani tanlang — mutaxassisimiz siz bilan bog'lanadi.</p>
+                    </div>
+
+                    <form id="test-drive-form" onsubmit="submitTestDrive(event)" class="space-y-4">
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1.5">Ism va familiyangiz *</label>
+                                <input type="text" id="td-name" required placeholder="Masalan: Sardor Karimov" 
+                                    class="w-full bg-slate-950 border border-slate-700 focus:border-rose-500 rounded-xl px-4 py-3 text-sm text-white outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1.5">Telefon raqamingiz *</label>
+                                <input type="tel" id="td-phone" required placeholder="+998 90 123 45 67" 
+                                    class="w-full bg-slate-950 border border-slate-700 focus:border-rose-500 rounded-xl px-4 py-3 text-sm text-white font-mono outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1.5">Avtomobil modelini tanlang *</label>
+                            <select id="td-model" class="w-full bg-slate-950 border border-slate-700 focus:border-rose-500 rounded-xl px-4 py-3 text-sm text-white outline-none"></select>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1.5">Avtosalon shahri *</label>
+                                <select id="td-city" class="w-full bg-slate-950 border border-slate-700 focus:border-rose-500 rounded-xl px-4 py-3 text-sm text-white outline-none">
+                                    <option value="Toshkent">Toshkent (Sergeli / Yunusobod)</option>
+                                    <option value="Samarqand">Samarqand avtosaloni</option>
+                                    <option value="Buxoro">Buxoro avtosaloni</option>
+                                    <option value="Andijon">Andijon avtosaloni</option>
+                                    <option value="Namangan">Namangan avtosaloni</option>
+                                    <option value="Farg'ona">Farg'ona avtosaloni</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1.5">Qulay sana *</label>
+                                <input type="date" id="td-date" required 
+                                    class="w-full bg-slate-950 border border-slate-700 focus:border-rose-500 rounded-xl px-4 py-3 text-sm text-white outline-none">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-rose-600 to-rose-500 hover:opacity-95 text-white font-bold text-sm transition-all shadow-lg shadow-rose-600/25 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span>Test-Drayv Arizasini Yuborish</span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Footer -->
+    <footer class="bg-[#05070b] border-t border-slate-800/80 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 pb-10 border-b border-slate-800/80">
+                <div class="md:col-span-2 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-rose-600/15 border border-rose-500/40 flex items-center justify-center text-rose-500">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+                        <span class="font-extrabold text-xl text-white uppercase">Auto<span class="text-rose-500">Lux</span> Motors</span>
+                    </div>
+                    <p class="text-sm text-slate-400 max-w-md leading-relaxed">
+                        O'zbekistondagi premium va zamonaviy avtomobillar rasmiy ko'rgazma zali. Kafolatlangan sifat, tezkor lizing va professional servis xizmati.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Bo'limlar</h4>
+                    <ul class="space-y-2.5 text-sm text-slate-400">
+                        <li><a href="#katalog" class="hover:text-rose-400 transition-colors">Brendlar katalogi</a></li>
+                        <li><a href="#konfigurator" class="hover:text-rose-400 transition-colors">Avtomobil konfiguratori</a></li>
+                        <li><a href="#solishtirish" class="hover:text-rose-400 transition-colors">Modellarni taqqoslash</a></li>
+                        <li><a href="#kalkulyator" class="hover:text-rose-400 transition-colors">Avtokredit kalkulyatori</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Aloqa Markazi</h4>
+                    <ul class="space-y-2.5 text-sm text-slate-400">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-rose-500"></i> +998 (71) 200-88-99</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-rose-500"></i> info@autolux.uz</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-rose-500"></i> Toshkent, Amir Temur shoh ko'chasi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; 2026 AutoLux Motors Uzbekistan. Barcha huquqlar himoyalangan.</p>
+                <p class="font-mono">Rasmiy Dilerlik Tarmog'i • <span class="text-emerald-400">24/7 Qo'llab-quvvatlash</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal: Avtomobil Batafsil Ma'lumotlari & Tasdiqlash -->
+    <div id="car-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-[#111520] border border-slate-700 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-5 relative">
+            <button onclick="closeCarModal()" class="absolute top-5 right-5 w-9 h-9 rounded-xl bg-slate-900 text-slate-400 hover:text-white flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-car-badge" class="inline-block px-3 py-1 rounded-lg bg-rose-500/15 border border-rose-500/30 text-rose-400 text-xs font-mono"></div>
+            <h3 id="modal-car-title" class="text-2xl font-extrabold text-white"></h3>
+            <p id="modal-car-desc" class="text-sm text-slate-300 leading-relaxed"></p>
+            
+            <div id="modal-car-specs" class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-950 border border-slate-800 rounded-2xl p-4"></div>
+
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                <button id="modal-cfg-btn" class="flex-1 py-3 px-4 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm transition-all">
+                    Konfiguratorda ochish
+                </button>
+                <button id="modal-td-btn" class="flex-1 py-3 px-4 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm transition-all">
+                    Test-drayvga yozilish
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Ma'lumotlar Bazasi va Mantiq -->
+    <script>
+        // --- 1. Avtomobillar Ma'lumotlar Bazasi ---
+        const carsDB = [
+            {
+                id: 'porsche-911',
+                brand: 'Porsche',
+                model: '911 Turbo S',
+                type: 'Sportkar',
+                price: 185000,
+                hp: 650,
+                acc: 2.7,
+                topSpeed: 330,
+                drive: 'AWD (4x4)',
+                fuel: 'Benzin 3.8L Twin-Turbo',
+                color: '#e11d48',
+                desc: "Afsonaviy sportkar muhandisligining cho'qqisi. Har bir burilishda maksimal boshqaruv va mislsiz dinamika."
+            },
+            {
+                id: 'bmw-m5',
+                brand: 'BMW',
+                model: 'M5 Competition',
+                type: 'Sedan',
+                price: 128000,
+                hp: 625,
+                acc: 3.1,
+                topSpeed: 305,
+                drive: 'M xDrive (AWD)',
+                fuel: 'Benzin 4.4L V8',
+                color: '#0ea5e9',
+                desc: "Biznes-klass qulayligi va poyga treki shiddatini o'zida mujassam etgan afsonaviy sport sedani."
+            },
+            {
+                id: 'mercedes-g63',
+                brand: 'Mercedes-Benz',
+                model: 'AMG G 63',
+                type: 'Krossover',
+                price: 215000,
+                hp: 585,
+                acc: 4.5,
+                topSpeed: 240,
+                drive: '4MATIC (4x4)',
+                fuel: 'Benzin 4.0L V8 Biturbo',
+                color: '#10b981',
+                desc: "O'zgarmas klassik dizayn, cheksiz yo'ltanlamaslik imkoniyati va AMG V8 dvigatelining betakror ovozi."
+            },
+            {
+                id: 'tesla-plaid',
+                brand: 'Tesla',
+                model: 'Model S Plaid',
+                type: 'Elektromobil',
+                price: 108000,
+                hp: 1020,
+                acc: 2.1,
+                topSpeed: 322,
+                drive: 'Tri-Motor AWD',
+                fuel: 'Elektr (637 km zaxira)',
+                color: '#f8fafc',
+                desc: "Uchta elektr motorli giper-sedan. Bir quvvatlashda 637 km masofa va kosmik tezlanish."
+            },
+            {
+                id: 'audi-rs7',
+                brand: 'Audi',
+                model: 'RS7 Sportback',
+                type: 'Sedan',
+                price: 134000,
+                hp: 600,
+                acc: 3.4,
+                topSpeed: 305,
+                drive: 'Quattro AWD',
+                fuel: 'Benzin 4.0L TFSI V8',
+                color: '#f59e0b',
+                desc: "Agresiv keng kuzov, lazerli faralar va Quattro to'liq uzatma tizimiga ega zamonaviy sportbek."
+            },
+            {
+                id: 'byd-han',
+                brand: 'BYD',
+                model: 'Han EV Flagship',
+                type: 'Elektromobil',
+                price: 44500,
+                hp: 517,
+                acc: 3.9,
+                topSpeed: 210,
+                drive: 'AWD (Dual Motor)',
+                fuel: 'Blade Battery (610 km)',
+                color: '#38bdf8',
+                desc: "Yuqori xavfsizlikdagi Blade batareyasi, premium charm salon va tejamkor boshqaruvga ega flagman elektromobil."
+            }
+        ];
+
+        let activeBrand = 'ALL';
+        let activeType = 'ALL';
+        let cfgState = {
+            carId: 'porsche-911',
+            colorHex: '#e11d48',
+            colorName: 'Poyga Qizili (Crimson)',
+            colorPrice: 0,
+            rimStyle: 'silver',
+            rimHex: '#cbd5e1',
+            rimPrice: 0
+        };
+
+        // --- 2. Toast Bildirishnoma ---
+        function showToast(msg, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const colors = type === 'success' 
+                ? 'border-emerald-500/50 text-emerald-300' 
+                : 'border-rose-500/50 text-rose-300';
+            const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-info';
+
+            toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl bg-[#111520] border ${colors} shadow-2xl text-sm font-medium transition-all duration-300 translate-y-2 opacity-0`;
+            toast.innerHTML = `<i class="fa-solid ${icon}"></i><span>${msg}</span>`;
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => toast.classList.remove('translate-y-2', 'opacity-0'));
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // --- 3. Mobil Menyu ---
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // --- 4. Katalog SVG Card Generator ---
+        function getMiniCarSVG(color, type) {
+            const isSuv = type === 'Krossover';
+            const bodyPath = isSuv
+                ? "M 35 95 L 42 58 L 95 45 L 185 45 L 225 68 L 265 75 L 268 102 L 230 102 C 228 84, 198 84, 196 102 L 94 102 C 92 84, 62 84, 60 102 L 35 102 Z"
+                : "M 32 95 C 32 82, 42 74, 58 70 L 98 52 C 130 44, 175 45, 205 64 L 258 74 C 268 78, 270 90, 266 100 L 230 102 C 228 84, 198 84, 196 102 L 94 102 C 92 84, 62 84, 60 102 L 34 100 Z";
+
+            return `
+            <svg viewBox="0 0 300 130" class="w-full h-36" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="150" cy="112" rx="115" ry="9" fill="#020408" opacity="0.85"/>
+                <path d="${bodyPath}" fill="${color}" stroke="#ffffff" stroke-opacity="0.25" stroke-width="1.2"/>
+                <path d="M 92 68 L 112 52 L 175 52 L 198 68 Z" fill="#0f172a"/>
+                <path d="M 244 77 L 264 81 L 258 86 L 242 82 Z" fill="#38bdf8"/>
+                <circle cx="77" cy="100" r="17" fill="#090b10" stroke="#94a3b8" stroke-width="2.5"/>
+                <circle cx="77" cy="100" r="7" fill="#1e293b"/>
+                <circle cx="213" cy="100" r="17" fill="#090b10" stroke="#94a3b8" stroke-width="2.5"/>
+                <circle cx="213" cy="100" r="7" fill="#1e293b"/>
+            </svg>`;
+        }
+
+        // --- 5. Katalog Filtr va Render ---
+        function setBrandFilter(brand) {
+            activeBrand = brand;
+            document.querySelectorAll('.brand-btn').forEach(btn => {
+                if (btn.dataset.brand === brand) {
+                    btn.className = "brand-btn active px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all";
+                } else {
+                    btn.className = "brand-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-rose-500/50 transition-all";
+                }
+            });
+            renderCatalog();
+        }
+
+        function setTypeFilter(type) {
+            activeType = type;
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                if (btn.dataset.type === type) {
+                    btn.className = "type-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-sky-500/20 text-sky-300 border border-sky-500/40";
+                } else {
+                    btn.className = "type-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-900 text-slate-400 border border-slate-800 hover:text-white";
+                }
+            });
+            renderCatalog();
+        }
+
+        function renderCatalog() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            const grid = document.getElementById('catalog-grid');
+            grid.innerHTML = '';
+
+            const filtered = carsDB.filter(car => {
+                const matchBrand = activeBrand === 'ALL' || car.brand === activeBrand;
+                const matchType = activeType === 'ALL' || car.type === activeType;
+                const matchSearch = car.model.toLowerCase().includes(query) || car.brand.toLowerCase().includes(query);
+                return matchBrand && matchType && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-14 rounded-2xl bg-[#111520] border border-slate-800">
+                        <i class="fa-solid fa-car-burst text-3xl text-slate-600 mb-3"></i>
+                        <p class="text-slate-400 text-sm">Tanlangan filtrlar bo'yicha avtomobil topilmadi.</p>
+                    </div>`;
+                return;
+            }
+
+            filtered.forEach(car => {
+                const card = document.createElement('div');
+                card.className = "rounded-2xl bg-[#111520] border border-slate-800 p-5 flex flex-col justify-between card-hover";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-mono font-bold text-rose-400 uppercase">${car.brand}</span>
+                            <span class="px-2.5 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-[11px] text-slate-300">${car.type}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">${car.model}</h3>
+                        
+                        <div class="my-3 rounded-xl bg-gradient-to-b from-slate-900/90 to-slate-950 border border-slate-800/80 px-2">
+                            ${getMiniCarSVG(car.color, car.type)}
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2 text-center my-4 bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
+                            <div>
+                                <div class="text-[10px] text-slate-500">Quvvat</div>
+                                <div class="text-xs font-bold font-mono text-white">${car.hp} o.k.</div>
+                            </div>
+                            <div class="border-x border-slate-800">
+                                <div class="text-[10px] text-slate-500">0–100 km/h</div>
+                                <div class="text-xs font-bold font-mono text-sky-400">${car.acc} s</div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-slate-500">Maks. tezlik</div>
+                                <div class="text-xs font-bold font-mono text-slate-200">${car.topSpeed} km/h</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-800/80 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-400">Narxi:</span>
+                            <span class="text-xl font-extrabold font-mono text-white">$${car.price.toLocaleString()}</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="openCarModal('${car.id}')" class="py-2 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-white transition-all">
+                                Batafsil
+                            </button>
+                            <button onclick="loadInConfigurator('${car.id}')" class="py-2 px-2 rounded-xl bg-sky-500/15 hover:bg-sky-500 hover:text-slate-950 border border-sky-500/30 text-xs font-semibold text-sky-300 transition-all">
+                                Sozlash
+                            </button>
+                            <button onclick="loadInComparison('${car.id}')" class="py-2 px-2 rounded-xl bg-rose-600/15 hover:bg-rose-600 hover:text-white border border-rose-500/30 text-xs font-semibold text-rose-400 transition-all">
+                                Solishtirish
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- 6. Modal Boshqaruvi ---
+        function openCarModal(carId) {
+            const car = carsDB.find(c => c.id === carId);
+            if (!car) return;
+
+            document.getElementById('modal-car-badge').textContent = `${car.brand} • ${car.type}`;
+            document.getElementById('modal-car-title').textContent = `${car.brand} ${car.model} — $${car.price.toLocaleString()}`;
+            document.getElementById('modal-car-desc').textContent = car.desc;
+
+            document.getElementById('modal-car-specs').innerHTML = `
+                <div><span class="text-[11px] text-slate-500 block">Dvigatel quvvati</span><strong class="text-sm font-mono text-white">${car.hp} ot kuchi</strong></div>
+                <div><span class="text-[11px] text-slate-500 block">0–100 km/soat</span><strong class="text-sm font-mono text-sky-400">${car.acc} soniya</strong></div>
+                <div><span class="text-[11px] text-slate-500 block">Maksimal tezlik</span><strong class="text-sm font-mono text-white">${car.topSpeed} km/soat</strong></div>
+                <div><span class="text-[11px] text-slate-500 block">Uzatma turi</span><strong class="text-sm text-emerald-400">${car.drive}</strong></div>
+                <div class="col-span-2"><span class="text-[11px] text-slate-500 block">Energiya / Yoqilg'i</span><strong class="text-sm text-slate-200">${car.fuel}</strong></div>
+            `;
+
+            document.getElementById('modal-cfg-btn').onclick = () => {
+                closeCarModal();
+                loadInConfigurator(car.id);
+            };
+            document.getElementById('modal-td-btn').onclick = () => {
+                closeCarModal();
+                document.getElementById('td-model').value = `${car.brand} ${car.model}`;
+                document.getElementById('test-drayv').scrollIntoView({ behavior: 'smooth' });
+            };
+
+            const modal = document.getElementById('car-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeCarModal() {
+            const modal = document.getElementById('car-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // --- 7. Interaktiv Konfigurator ---
+        function loadInConfigurator(carId) {
+            document.getElementById('cfg-model-select').value = carId;
+            updateConfigurator();
+            document.getElementById('konfigurator').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectConfigColor(hex, name, price, btnEl) {
+            cfgState.colorHex = hex;
+            cfgState.colorName = name;
+            cfgState.colorPrice = price;
+
+            document.querySelectorAll('.color-swatch').forEach(s => {
+                s.classList.remove('ring-2', 'ring-offset-2', 'ring-offset-[#111520]', 'ring-white');
+            });
+            btnEl.classList.add('ring-2', 'ring-offset-2', 'ring-offset-[#111520]', 'ring-white');
+            updateConfigurator();
+        }
+
+        function selectConfigRim(style, hex, price, btnEl) {
+            cfgState.rimStyle = style;
+            cfgState.rimHex = hex;
+            cfgState.rimPrice = price;
+
+            document.querySelectorAll('.rim-btn').forEach(b => {
+                b.classList.remove('border-rose-500', 'text-white');
+                b.classList.add('border-slate-800', 'text-slate-300');
+            });
+            btnEl.classList.remove('border-slate-800', 'text-slate-300');
+            btnEl.classList.add('border-rose-500', 'text-white');
+            updateConfigurator();
+        }
+
+        function updateConfigurator() {
+            const modelId = document.getElementById('cfg-model-select').value;
+            const car = carsDB.find(c => c.id === modelId) || carsDB[0];
+            const interiorSelect = document.getElementById('cfg-interior-select');
+            const interiorPrice = parseInt(interiorSelect.value, 10) || 0;
+            const interiorColor = interiorSelect.options[interiorSelect.selectedIndex].dataset.color;
+
+            // Update SVG visuals
+            document.getElementById('cfg-car-body').setAttribute('fill', cfgState.colorHex);
+            document.getElementById('cfg-glow-stop').setAttribute('stop-color', cfgState.colorHex);
+            document.getElementById('cfg-interior-seat').setAttribute('fill', interiorColor);
+
+            // Rims color
+            ['cfg-rim-rear', 'cfg-rim-front'].forEach(id => {
+                document.getElementById(id).setAttribute('stroke', cfgState.rimHex);
+            });
+            ['cfg-spokes-rear', 'cfg-spokes-front'].forEach(id => {
+                document.getElementById(id).setAttribute('stroke', cfgState.rimHex);
+            });
+
+            // Labels & Specs
+            document.getElementById('cfg-badge-brand').textContent = `${car.brand} ${car.model}`;
+            document.getElementById('cfg-badge-color').textContent = `Rang: ${cfgState.colorName}`;
+            document.getElementById('cfg-spec-hp').textContent = `${car.hp} o.k.`;
+            document.getElementById('cfg-spec-acc').textContent = `${car.acc} son`;
+            document.getElementById('cfg-spec-drive').textContent = car.drive;
+
+            const total = car.price + cfgState.colorPrice + cfgState.rimPrice + interiorPrice;
+            document.getElementById('cfg-total-price').textContent = `$${total.toLocaleString()}`;
+        }
+
+        function bookConfiguredCar() {
+            const modelId = document.getElementById('cfg-model-select').value;
+            const car = carsDB.find(c => c.id === modelId);
+            const totalText = document.getElementById('cfg-total-price').textContent;
+            document.getElementById('td-model').value = `${car.brand} ${car.model}`;
+            showToast(`${car.brand} ${car.model} (${totalText}) konfiguratsiyasi tanlandi!`, 'success');
+            document.getElementById('test-drayv').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- 8. Modellarni Solishtirish ---
+        function loadInComparison(carId) {
+            document.getElementById('cmp-select-2').value = carId;
+            renderComparison();
+            document.getElementById('solishtirish').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderComparison() {
+            const car1 = carsDB.find(c => c.id === document.getElementById('cmp-select-1').value) || carsDB[0];
+            const car2 = carsDB.find(c => c.id === document.getElementById('cmp-select-2').value) || carsDB[3];
+
+            const maxHp = Math.max(car1.hp, car2.hp, 1050);
+            const maxSpeed = Math.max(car1.topSpeed, car2.topSpeed, 350);
+            const maxPrice = Math.max(car1.price, car2.price, 220000);
+            // Tezlanishda kichik son yaxshiroq (teskari foiz)
+            const accPct1 = Math.min(100, Math.round((6 / car1.acc) * 45));
+            const accPct2 = Math.min(100, Math.round((6 / car2.acc) * 45));
+
+            const container = document.getElementById('comparison-results');
+            container.innerHTML = `
+                <div class="grid grid-cols-2 gap-4 pb-4 border-b border-slate-800 text-center">
+                    <div class="p-4 rounded-2xl bg-slate-950/90 border border-rose-500/30">
+                        <div class="text-xs font-mono text-rose-400">${car1.brand}</div>
+                        <div class="text-lg sm:text-xl font-bold text-white">${car1.model}</div>
+                        <div class="text-xs text-slate-400 mt-1">${car1.fuel}</div>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-950/90 border border-sky-500/30">
+                        <div class="text-xs font-mono text-sky-400">${car2.brand}</div>
+                        <div class="text-lg sm:text-xl font-bold text-white">${car2.model}</div>
+                        <div class="text-xs text-slate-400 mt-1">${car2.fuel}</div>
+                    </div>
+                </div>
+
+                ${buildCompareRow('Dvigatel Quvvati', `${car1.hp} o.k.`, `${car2.hp} o.k.`, (car1.hp / maxHp) * 100, (car2.hp / maxHp) * 100)}
+                ${buildCompareRow('0–100 km/soat Tezlanish', `${car1.acc} soniya`, `${car2.acc} soniya`, accPct1, accPct2)}
+                ${buildCompareRow('Maksimal Tezlik', `${car1.topSpeed} km/h`, `${car2.topSpeed} km/h`, (car1.topSpeed / maxSpeed) * 100, (car2.topSpeed / maxSpeed) * 100)}
+                ${buildCompareRow('Avtosalon Narxi', `$${car1.price.toLocaleString()}`, `$${car2.price.toLocaleString()}`, (car1.price / maxPrice) * 100, (car2.price / maxPrice) * 100)}
+            `;
+        }
+
+        function buildCompareRow(label, val1, val2, pct1, pct2) {
+            return `
+            <div class="space-y-2">
+                <div class="flex justify-between items-center text-xs sm:text-sm">
+                    <span class="font-mono font-bold text-rose-400">${val1}</span>
+                    <span class="text-slate-400 font-medium">${label}</span>
+                    <span class="font-mono font-bold text-sky-400">${val2}</span>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden flex justify-end">
+                        <div class="h-full bg-rose-500 rounded-full transition-all duration-500" style="width: ${Math.round(pct1)}%"></div>
+                    </div>
+                    <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden">
+                        <div class="h-full bg-sky-400 rounded-full transition-all duration-500" style="width: ${Math.round(pct2)}%"></div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        // --- 9. Kredit / Lizing Kalkulyatori ---
+        function calculateLoan() {
+            const price = parseFloat(document.getElementById('loan-price').value);
+            const downPct = parseFloat(document.getElementById('loan-down').value);
+            const months = parseInt(document.getElementById('loan-months').value, 10);
+            const annualRate = parseFloat(document.getElementById('loan-rate').value);
+
+            const downAmount = Math.round(price * (downPct / 100));
+            const principal = price - downAmount;
+            const monthlyRate = (annualRate / 100) / 12;
+
+            let monthlyPayment = 0;
+            if (monthlyRate === 0) {
+                monthlyPayment = principal / months;
+            } else {
+                const factor = Math.pow(1 + monthlyRate, months);
+                monthlyPayment = (principal * monthlyRate * factor) / (factor - 1);
+            }
+
+            document.getElementById('loan-price-val').textContent = `$${price.toLocaleString()}`;
+            document.getElementById('loan-down-val').textContent = `${downPct}% ($${downAmount.toLocaleString()})`;
+            document.getElementById('loan-months-val').textContent = `${months} oy (${(months / 12).toFixed(1).replace('.0', '')} yil)`;
+            document.getElementById('loan-rate-val').textContent = `${annualRate}%`;
+
+            document.getElementById('loan-monthly').textContent = `$${Math.round(monthlyPayment).toLocaleString()}`;
+            document.getElementById('loan-principal').textContent = `$${principal.toLocaleString()}`;
+        }
+
+        // --- 10. Test-Drayv Arizasi ---
+        function submitTestDrive(e) {
+            e.preventDefault();
+            const name = document.getElementById('td-name').value.trim();
+            const model = document.getElementById('td-model').value;
+            const city = document.getElementById('td-city').value;
+            const date = document.getElementById('td-date').value;
+
+            showToast(`Rahmat, ${name}! ${city} shahrida ${model} uchun (${date}) test-drayv band qilindi.`, 'success');
+            document.getElementById('test-drive-form').reset();
+            setDefaultDate();
+        }
+
+        function setDefaultDate() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('td-date').value = tomorrow.toISOString().split('T')[0];
+        }
+
+        // --- 11. Sahifa Yuklanganda Ishga Tushirish ---
+        window.onload = function() {
+            // Select menyularni modellar bilan to'ldirish
+            const cfgSelect = document.getElementById('cfg-model-select');
+            const cmp1 = document.getElementById('cmp-select-1');
+            const cmp2 = document.getElementById('cmp-select-2');
+            const tdModel = document.getElementById('td-model');
+
+            carsDB.forEach(car => {
+                const label = `${car.brand} ${car.model} ($${car.price.toLocaleString()})`;
+                cfgSelect.add(new Option(label, car.id));
+                cmp1.add(new Option(`${car.brand} ${car.model}`, car.id));
+                cmp2.add(new Option(`${car.brand} ${car.model}`, car.id));
+                tdModel.add(new Option(`${car.brand} ${car.model}`, `${car.brand} ${car.model}`));
+            });
+
+            cmp1.value = 'porsche-911';
+            cmp2.value = 'tesla-plaid';
+
+            renderCatalog();
+            updateConfigurator();
+            renderComparison();
+            calculateLoan();
+            setDefaultDate();
+        };
+    </script>
+</body>
+</html>
